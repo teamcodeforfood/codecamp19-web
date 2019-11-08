@@ -1,7 +1,7 @@
 import React from "react";
-import { Provider } from "react-redux";
 import ReactDOM from "react-dom";
-import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import { ConnectedRouter } from "connected-react-router";
 import { ThemeProvider } from "styled-components";
 import { DefaultTheme } from "amino-ui";
 
@@ -9,14 +9,15 @@ import { store } from "./store";
 import "./index.css";
 import { App } from "./components/App";
 import * as serviceWorker from "./serviceWorker";
+import { history } from "./store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <ConnectedRouter history={history}>
       <ThemeProvider theme={DefaultTheme}>
         <App />
       </ThemeProvider>
-    </BrowserRouter>
+    </ConnectedRouter>
   </Provider>,
   document.getElementById("root")
 );
