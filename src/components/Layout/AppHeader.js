@@ -80,17 +80,11 @@ export const AppHeader = () => (
             <ul>
               <li>
                 <a href="#" className="active">
-                  Overview
+                  Home
                 </a>
               </li>
               <li>
-                <a href="#">Teams</a>
-              </li>
-              <li>
-                <a href="#">Scoring</a>
-              </li>
-              <li>
-                <a href="#">Judges</a>
+                <a href="#">Events</a>
               </li>
               <li>
                 <a href="#">Settings</a>
