@@ -16,7 +16,6 @@ export const App = () => (
       <Route exact path="/dashboard/admin/overview" component={AdminOverview} />
       <Route exact path="/dashboard/admin/setup" component={AdminSetup} />
 
-      <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/" component={Dashboard} />
     </Switch>
   </Router>

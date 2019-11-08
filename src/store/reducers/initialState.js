@@ -1,6 +1,7 @@
 export default {
   user: {
-    isAuthenticated: false
+    isAuthenticated: false,
+    role: 'admin',
   },
   event: {
     setupComplete: false
