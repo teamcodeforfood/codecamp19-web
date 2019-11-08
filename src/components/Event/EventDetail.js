@@ -7,7 +7,10 @@ import {
   ResponsiveContainer,
   Density,
   Surface,
-  Intent
+  Intent,
+  Input,
+  ListItem,
+  List
 } from "amino-ui";
 import Geopattern from "geopattern";
 import { Heading } from "evergreen-ui";
@@ -16,6 +19,8 @@ import { AppHeader } from "../Layout/AppHeader";
 import { Dialog } from "../Layout/Dialog";
 import { isAuthenticated } from "../../utils/isAuthenticated";
 import { Card } from "../Layout/Card";
+import { TeamCode } from "../Team/TeamCode";
+import { Divider } from "../Layout/Divider";
 
 const Header = styled.div`
   height: 150px;
@@ -91,7 +96,20 @@ export const EventDetail = () => {
         </CardStack>
       </ResponsiveContainer>
       <Dialog open={open} label="Dialog title" onClose={() => setOpen(false)}>
-        {isAuthenticated() ? <>join or create team</> : <>register</>}
+        {isAuthenticated() ? (
+          <>
+            Have a team code? Enter it here:
+            <TeamCode />
+            <Divider />
+            <ListItem
+              icon="/images/create_team.svg"
+              onClick={() => {}}
+              label="Create a new team"
+            />
+          </>
+        ) : (
+          <>register</>
+        )}
       </Dialog>
     </>
   );

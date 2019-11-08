@@ -45,6 +45,7 @@ const StyledDialog = styled.div`
     props.autoWidth ? "auto" : props.width ? props.width + "px" : 550 + "px"};
   border-radius: 8px;
   max-height: 90vh;
+  height: auto;
   box-shadow: ${Surface.shadow.higher};
   outline: none;
 `;
@@ -67,7 +68,6 @@ const Header = styled.header`
 const Content = styled.div`
   //// font-size: 14px;
   padding: ${Density.spacing.md};
-  padding-bottom: ${Density.spacing.xs};
   max-height: 75vh;
   overflow: scroll;
   overflow: -moz-scrollbars-none;
