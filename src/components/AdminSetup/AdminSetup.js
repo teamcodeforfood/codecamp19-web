@@ -4,7 +4,6 @@ import {
   Card,
   Input,
   InputGroup,
-  ResponsiveContainer,
   CardStack,
   Button,
   Intent,
@@ -27,9 +26,8 @@ export const AdminSetup = () => {
 
   const save = e => {
     e.preventDefault();
-    e.stopPropagation();
 
-    goto("/overview");
+    goto("/");
   };
 
   return (
