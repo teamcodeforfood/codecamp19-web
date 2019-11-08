@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Density, AppBar, ResponsiveContainer } from "amino-ui";
-import { Logo } from "./Logo";
+import Gravatar from "react-awesome-gravatar";
+import {Logo} from "./Logo";
 
 const HeaderLayout = styled.div`
   display: flex;
@@ -53,14 +54,16 @@ const User = styled.div`
   flex: 1;
   justify-content: flex-end;
   display: flex;
+
+  img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+  }
 `;
 
 const Brand = styled.div`
   flex: 1;
-
-  img {
-    width: 100px;
-  }
 `;
 
 export const AppHeader = () => (
@@ -68,7 +71,7 @@ export const AppHeader = () => (
     <ResponsiveContainer>
       <HeaderLayout>
         <Brand>
-          <img src="/images/logo.svg" />
+          <Logo />
         </Brand>
         <Nav>
           <ul>
@@ -92,7 +95,9 @@ export const AppHeader = () => (
           </ul>
         </Nav>
         <User>
-          <img src="//placehold.it/32x32" alt="" />
+          <Gravatar email={"hello@joshbeitler.com"}>
+            {url => <img src={url} alt="Profile picture" />}
+          </Gravatar>
         </User>
       </HeaderLayout>
     </ResponsiveContainer>
