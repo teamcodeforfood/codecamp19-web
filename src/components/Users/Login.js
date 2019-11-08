@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { useInput } from "react-hanger";
 import { Button, Card, Input, InputGroup, Intent } from "amino-ui";
 
 import { LoginWrapper } from "./LoginWrapper";
@@ -10,8 +11,8 @@ export const Login = () => {
     e.stopPropagation();
   };
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const email = useInput("");
+  const password = useInput("");
 
   return (
     <LoginWrapper>
@@ -19,20 +20,8 @@ export const Login = () => {
       <Card>
         <form onSubmit={login}>
           <InputGroup>
-            <Input
-              type="email"
-              label="Email address"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
-            <Input
-              type="password"
-              label="Password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
+            <Input type="email" label="Email address" required {...email} />
+            <Input type="password" label="Password" required {...password} />
           </InputGroup>
 
           <Button intent={Intent.Primary}>Log in</Button>

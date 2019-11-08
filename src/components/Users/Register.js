@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button, Card, Input, InputGroup, Intent } from "amino-ui";
 
 import { LoginWrapper } from "./LoginWrapper";
 import { Logo } from "../Layout/Logo";
+import { useInput } from "react-hanger";
 
 export const Register = () => {
   const register = e => {
@@ -10,10 +11,10 @@ export const Register = () => {
     e.stopPropagation();
   };
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [passwordVerify, setPasswordVerify] = useState("");
-  const [name, setName] = useState("");
+  const email = useInput("");
+  const password = useInput("");
+  const passwordVerify = useInput("");
+  const name = useInput("");
 
   return (
     <LoginWrapper>
@@ -21,33 +22,10 @@ export const Register = () => {
       <Card>
         <form onSubmit={register}>
           <InputGroup>
-            <Input
-              label="Email address"
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              required
-            />
-            <Input
-              label="Full name"
-              value={name}
-              onChange={e => setName(e.target.value)}
-              required
-            />
-            <Input
-              type="password"
-              label="Password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-            />
-            <Input
-              type="password"
-              value={passwordVerify}
-              onChange={e => setPasswordVerify(e.target.value)}
-              label="Password (again)"
-              required
-            />
+            <Input label="Email address" type="email" required {...email} />
+            <Input label="Full name" required {...name} />
+            <Input type="password" label="Password" required {...password} />
+            <Input type="password" required {...passwordVerify} />
           </InputGroup>
           <Button intent={Intent.Primary}>Register</Button>
         </form>
