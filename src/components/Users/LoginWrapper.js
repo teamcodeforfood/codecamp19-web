@@ -7,14 +7,21 @@ export const LoginWrapper = styled.div`
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  flex-direction: column;
 
   section {
-    max-width: 400px;
+    width: 400px;
+    display: block;
+    flex: 0;
   }
 
   button {
     display: block;
     width: 100%;
     margin-top: ${Density.spacing.lg};
+  }
+  
+ img {
+    margin-bottom: ${Density.spacing.lg};
   }
 `;
