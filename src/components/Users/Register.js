@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Input, InputGroup, Intent } from "amino-ui";
 
 import { LoginWrapper } from "./LoginWrapper";
-import { Logo } from "../Logo";
+import { Logo } from "../Layout/Logo";
 
 export const Register = () => {
   const register = e => {
