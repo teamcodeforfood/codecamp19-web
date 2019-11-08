@@ -17,8 +17,8 @@ export const Login = () => {
     <LoginWrapper>
       <Logo />
       <Card>
-        <InputGroup>
-          <form onSubmit={login}>
+        <form onSubmit={login}>
+          <InputGroup>
             <Input
               type="email"
               label="Email address"
@@ -33,10 +33,10 @@ export const Login = () => {
               onChange={e => setPassword(e.target.value)}
               required
             />
+          </InputGroup>
 
-            <Button intent={Intent.Primary}>Log in</Button>
-          </form>
-        </InputGroup>
+          <Button intent={Intent.Primary}>Log in</Button>
+        </form>
       </Card>
     </LoginWrapper>
   );
