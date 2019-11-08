@@ -22,7 +22,30 @@ const Nav = styled.nav`
 
   li {
     display: inline-block;
+  }
+
+  a {
     margin: 0 ${Density.spacing.sm};
+    display: inline-block;
+    height: 72px;
+    line-height: 72px;
+    text-decoration: none;
+    color: inherit;
+    font-weight: 500;
+    opacity: 0.8;
+    transition: all 150ms ease-in-out;
+    border-bottom: 3px solid transparent;
+    box-sizing: border-box;
+  }
+
+  a:hover {
+    opacity: 1;
+  }
+
+  a.active {
+    border-bottom: 3px solid #448fe1;
+    color: #448fe1;
+    opacity: 1;
   }
 `;
 
@@ -34,6 +57,10 @@ const User = styled.div`
 
 const Brand = styled.div`
   flex: 1;
+
+  img {
+    width: 100px;
+  }
 `;
 
 export const AppHeader = () => (
@@ -41,21 +68,26 @@ export const AppHeader = () => (
     <ResponsiveContainer>
       <HeaderLayout>
         <Brand>
-          <Logo />
+          <img src="/images/logo.svg" />
         </Brand>
         <Nav>
           <ul>
             <li>
-              <a href="#">page</a>
+              <a href="#" className="active">
+                Overview
+              </a>
             </li>
             <li>
-              <a href="#">page</a>
+              <a href="#">Teams</a>
             </li>
             <li>
-              <a href="#">page</a>
+              <a href="#">Scoring</a>
             </li>
             <li>
-              <a href="#">page</a>
+              <a href="#">Judges</a>
+            </li>
+            <li>
+              <a href="#">Settings</a>
             </li>
           </ul>
         </Nav>
