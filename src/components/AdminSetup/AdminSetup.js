@@ -11,6 +11,8 @@ import {
   Notice
 } from "amino-ui";
 import { useInput } from "react-hanger";
+import {useDispatch} from "react-redux";
+import { push } from 'connected-react-router';
 
 export const AdminSetup = () => {
   const name = useInput("");
@@ -20,9 +22,14 @@ export const AdminSetup = () => {
   const teamSize = useInput("");
   const description = useInput("");
 
+  const dispatch = useDispatch();
+  const goto = url => dispatch(push(url));
+
   const save = e => {
     e.preventDefault();
     e.stopPropagation();
+
+    goto("/dashboard/admin/overview");
   };
 
   return (
