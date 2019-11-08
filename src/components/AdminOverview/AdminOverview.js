@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Heading, Paragraph, Link, Pane, IconButton } from 'evergreen-ui';
+import { Card, Heading, Paragraph, Link, Pane, IconButton, Button, TextInput } from 'evergreen-ui';
 import styled from 'styled-components';
 
 
@@ -12,91 +12,171 @@ export const AdminOverview = () => {
     <Wrapper>
       <EventInfo></EventInfo>
       <AnnouncementsCard></AnnouncementsCard>
+      <Teams></Teams>
     </Wrapper>
   );
 };
 
 class EventInfo extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      event: {
+        name: "Event Name is here",
+        owner_user_id: 1,
+        starts_at: Date(),
+        ends_at: Date(),
+        website_url: "https://sebastiandedeyne.com/react-for-vue-developers/",
+        location: "1122 E 300 S St. George, Utah",
+        description: "Prepared is me marianne pleasure likewise debating. Wonder an unable except better stairs do ye admire. His and eat secure sex called esteem praise. So moreover as speedily differed branched ignorant. Tall are her knew poor now does then. Procured to contempt oh he raptures amounted occasion. One boy assure income spirit lovers set.",
+        logo_url: "./logo",
+        max_team_size: "10"
+      }
+    }
+  }
+
   render() {
     return (
       <Card background="blueTint" padding={16} elevation={1} marginBottom={18}>
-        <Heading paddingBottom={8} size="900">Event Name is right here</Heading>
+        <Heading paddingBottom={8} size="900">{this.state.event.name}</Heading>
         <Pane>
           <Heading>Event description:</Heading>
           <Paragraph>
-            Prepared is me marianne pleasure likewise debating. Wonder an unable except better stairs do ye admire. His and eat secure sex called esteem praise. So moreover as speedily differed branched ignorant. Tall are her knew poor now does then. Procured to contempt oh he raptures amounted occasion. One boy assure income spirit lovers set. 
-            Blind would equal while oh mr do style. Lain led and fact none. One preferred sportsmen resolving the happiness continued. High at of in loud rich true. Oh conveying do immediate acuteness in he. Equally welcome her set nothing has gravity whether parties. Fertile suppose shyness mr up pointed in staying on respect. 
+            {this.state.event.description}
           </Paragraph>
         </Pane>
         <Pane paddingTop={8}>
-          <Heading>Event URL: <Link href="#">This is the websites URL</Link></Heading>
+          <Heading>Event URL: <Link href="#">{this.state.event.website_url}</Link></Heading>
         </Pane>
         <Pane paddingBottom={8}>
-          <Heading>Location: <Link href="#">This is the event location</Link></Heading>
+          <Heading>Location: {this.state.event.location}</Heading>
         </Pane>
-        <StartTimer></StartTimer>
+        <Pane>
+          <Card>
+            <div>Start Time: <span>{this.state.event.starts_at}</span></div>
+            <div>End Time: <span>{this.state.event.ends_at}</span></div>
+            <div>Time remaining: <span>{this.state.event.ends_at - this.state.event.starts_at}</span></div>
+          </Card>
+        </Pane>
       </Card>
     );
   }
-};
-
-export const StartTimer = () => {
-  return (
-    <Pane>
-      <Card>
-        <div>Start Time: <span>start time here</span></div>
-        <div>End Time: <span>end time here</span></div>
-        <div>Time remaining: <span>??</span></div>
-      </Card>
-    </Pane>
-  );
 };
 
 class AnnouncementsCard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      Announcements: [
+      announcements: [
         "Prepared is me marianne pleasure",
         "Prepared is me marianne pleasure",
         "Prepared is me marianne pleasure",
         "Prepared is me marianne pleasure"
-      ]
+      ],
     }
   }
-
   render() {
     return (
-      <Card background="blueTint" padding={16} elevation={1}>
+      <Card background="blueTint" padding={16} elevation={1} marginBottom={16}>
         <Pane display="flex">
           <Pane flex={1}>
             <Heading paddingBottom={16} size={900}>Announcements Manager</Heading>
           </Pane>
           <Pane>
-            <IconButton icon="add"/>
+            <Button onClick={() => alert('implement add')}>Add</Button>
           </Pane>
         </Pane>
-        <Announcement></Announcement>
+        <div>
+          {
+            this.state.announcements.map((body) => (
+              <Announcement body={body}></Announcement>
+            ))
+          }
+        </div>
       </Card>
     );
   }
 };
 
-export const Announcement = () => {
-  return (
-    <Pane display="flex">
-      <Pane flex={1}>
-        <Heading>The announcement body goes here.</Heading>
+class Announcement extends React.Component {
+  render() {
+    return (
+      <Pane display="flex" paddingTop={4}>
+        <Pane flex={1}>
+        <Heading>{this.props.body}</Heading>
+        </Pane>
+        <Pane>
+          <IconButton icon="notifications" onClick={() => alert('Are you sure you want to alert?')} marginRight={16}/>
+        </Pane>
+        <Pane>
+          <IconButton icon="delete" onClick={() => alert('Are you sure you want to delete?')} marginRight={16}/>
+        </Pane>
       </Pane>
-      <Pane>
-        <IconButton icon="edit" marginRight={16}/>
-      </Pane>
-      <Pane>
-        <IconButton icon="notifications" onClick={() => alert('Are you sure you want to alert?')} marginRight={16}/>
-      </Pane>
-      <Pane>
-        <IconButton icon="delete" marginRight={16}/>
-      </Pane>
-    </Pane>
-  );
+    );
+  }
 };
+
+class Teams extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      teams: [
+        {
+          name: "Team 1"
+        },
+        {
+          name: "Team 2"
+        },
+        {
+          name: "Team 3"
+        },
+        {
+          name: "Team 4"
+        },
+        {
+          name: "Team 5"
+        },
+        {
+          name: "Team 6"
+        }
+      ],
+      expand: false,
+    }
+  }
+
+  render() {
+    return (
+      <Card background="blueTint" padding={16} elevation={1} >
+        <Heading size={900} paddingBottom={8}>Teams</Heading>
+        <div>
+          {
+            this.state.expand ? (
+              this.state.teams.map((team) => (
+                <Team team={team}></Team>
+              ))
+            ) : (
+              this.state.teams.slice(0, 3).map((team) => (
+                <Team team={team}></Team>
+              ))
+            )
+          }
+        </div>
+        <Pane display="flex">
+          <Pane flex={1}></Pane>
+          <Button onClick={() => this.setState({expand: !this.state.expand})}> . . . </Button>
+        </Pane>
+      </Card>
+    );
+  }
+}
+
+class Team extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <Heading>{this.props.team.name}</Heading>
+    );
+  }
+}
