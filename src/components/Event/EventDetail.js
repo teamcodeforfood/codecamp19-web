@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Dialog, Button } from "evergreen-ui";
+import { Dialog, Button, Heading } from "evergreen-ui";
 import { useParams } from "react-router-dom";
 import { Card, CardStack, ResponsiveContainer } from "amino-ui";
 
@@ -16,7 +16,9 @@ export const EventDetail = () => {
       <ResponsiveContainer>
         <CardStack>
           <Card>
-            event id: {id}
+            <Heading size={900} marginTop="0">
+              Event {id}
+            </Heading>
             <Button appearance="primary" onClick={() => setOpen(true)}>
               Sign up for this event
             </Button>
