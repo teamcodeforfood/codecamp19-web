@@ -7,7 +7,8 @@ import {
   ResponsiveContainer,
   CardStack,
   Button,
-  Intent
+  Intent,
+  Notice
 } from "amino-ui";
 import { useInput } from "react-hanger";
 
@@ -28,7 +29,9 @@ export const AdminSetup = () => {
     <ResponsiveContainer>
       <CardStack>
         <form onSubmit={save}>
-          <Card>Before you continue, fill out the event details</Card>
+          <Notice intent={Intent.Primary}>
+            Before you continue, fill out the event details
+          </Notice>
           <Card>
             <InputGroup>
               <Input {...name} label="Event name" required />
