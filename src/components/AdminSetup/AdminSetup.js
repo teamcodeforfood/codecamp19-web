@@ -9,7 +9,7 @@ import {
   Button,
   Intent
 } from "amino-ui";
-import { useInput } from 'react-hanger';
+import { useInput } from "react-hanger";
 
 export const AdminSetup = () => {
   const name = useInput("");
@@ -28,22 +28,16 @@ export const AdminSetup = () => {
     <ResponsiveContainer>
       <CardStack>
         <form onSubmit={save}>
+          <Card>Before you continue, fill out the event details</Card>
           <Card>
-            Before you continue, fill out the event details
-          </Card>
-          <Card cardTitle="Basic details">
             <InputGroup>
-              <Input {...name} label="Event name" />
-              <Input {...website} label="Event website" />
+              <Input {...name} label="Event name" required />
+              <Input {...website} label="Event website" required type="url" />
               <Input {...startsAt} label="Starts at" />
               <Input {...endsAt} label="Ends at" />
               <Input {...teamSize} label="Max team size" />
+              <Textarea label="Description" />
             </InputGroup>
-          </Card>
-          <Card cardTitle="Event description">
-            <Textarea label="Description" />
-          </Card>
-          <Card>
             <Button intent={Intent.Primary}>Continue</Button>
           </Card>
         </form>
