@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { ResponsiveContainer } from "amino-ui";
 import { Route } from "react-router-dom";
 
 import { AdminOverview } from "../AdminOverview/AdminOverview";
@@ -15,11 +16,11 @@ export const Dashboard = () => {
       <AppHeader />
 
       {user.role === "admin" ? (
-        <>
-          <Route exact path="/overview" component={withAuth(AdminOverview)} />
-          <Route exact path="/setup" component={withAuth(AdminSetup)} />
+        <ResponsiveContainer>
+          <Route path="/overview" component={withAuth(AdminOverview)} />
+          <Route path="/setup" component={withAuth(AdminSetup)} />
           <Route exact path="/" component={withAuth(AdminOverview)} />
-        </>
+        </ResponsiveContainer>
       ) : null}
 
       {user.role === "judge" ? <>ur a judge</> : null}

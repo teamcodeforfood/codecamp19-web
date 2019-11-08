@@ -13,8 +13,6 @@ import {
 import { useInput } from "react-hanger";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
-import { AppHeader } from "../Layout/AppHeader";
-import { Page } from "../Layout/Page";
 
 export const AdminSetup = () => {
   const name = useInput("");
@@ -31,32 +29,27 @@ export const AdminSetup = () => {
     e.preventDefault();
     e.stopPropagation();
 
-    goto("/dashboard/admin/overview");
+    goto("/overview");
   };
 
   return (
-    <Page>
-      <AppHeader />
-      <ResponsiveContainer>
-        <CardStack>
-          <form onSubmit={save}>
-            <Notice intent={Intent.Primary}>
-              Before you continue, fill out the event details
-            </Notice>
-            <Card>
-              <InputGroup>
-                <Input {...name} label="Event name" required />
-                <Input {...website} label="Event website" required type="url" />
-                <Input {...startsAt} label="Starts at" />
-                <Input {...endsAt} label="Ends at" />
-                <Input {...teamSize} label="Max team size" />
-                <Textarea label="Description" />
-              </InputGroup>
-              <Button intent={Intent.Primary}>Continue</Button>
-            </Card>
-          </form>
-        </CardStack>
-      </ResponsiveContainer>
-    </Page>
+    <CardStack>
+      <form onSubmit={save}>
+        <Notice intent={Intent.Primary}>
+          Before you continue, fill out the event details
+        </Notice>
+        <Card>
+          <InputGroup>
+            <Input {...name} label="Event name" required />
+            <Input {...website} label="Event website" required type="url" />
+            <Input {...startsAt} label="Starts at" />
+            <Input {...endsAt} label="Ends at" />
+            <Input {...teamSize} label="Max team size" />
+            <Textarea label="Description" />
+          </InputGroup>
+          <Button intent={Intent.Primary}>Continue</Button>
+        </Card>
+      </form>
+    </CardStack>
   );
 };

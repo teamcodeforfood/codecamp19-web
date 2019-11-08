@@ -15,7 +15,7 @@ export const App = () => (
 
       <Route exact path="/dashboard/admin/overview" component={AdminOverview} />
 
-      <Route exact path="/" component={withAuth(Dashboard)} />
+      <Route path="/" component={withAuth(Dashboard)} />
     </Switch>
   </Router>
 );
