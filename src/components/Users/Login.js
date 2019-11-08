@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import { useInput } from "react-hanger";
-import { Button, TextInputField } from "evergreen-ui";
-import { Card } from "amino-ui";
+import { Card, Button, Input, Intent, InputGroup } from "amino-ui";
 
 import { LoginWrapper } from "./LoginWrapper";
 import { Logo } from "../Layout/Logo";
@@ -55,20 +54,12 @@ export const Login = () => {
       <Logo />
       <Card cardTitle="Log in to continue">
         <form onSubmit={login}>
-          <TextInputField
-            type="email"
-            label="Email address"
-            required
-            {...email}
-          />
-          <TextInputField
-            type="password"
-            label="Password"
-            required
-            {...password}
-          />
+          <InputGroup>
+            <Input type="email" label="Email address" required {...email} />
+            <Input type="password" label="Password" required {...password} />
+          </InputGroup>
 
-          <Button isLoading={saving} appearance="primary">
+          <Button saving={saving} intent={Intent.Primary}>
             Log in
           </Button>
         </form>
