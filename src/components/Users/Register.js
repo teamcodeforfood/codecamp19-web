@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Card } from "amino-ui";
+import { Card, Button, Input, InputGroup, Intent } from "amino-ui";
 import { useInput } from "react-hanger";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import { Link } from "react-router-dom";
-import { TextInputField, Button } from "evergreen-ui";
 
 import { LoginWrapper } from "./LoginWrapper";
 import { Logo } from "../Layout/Logo";
@@ -88,25 +87,17 @@ export const Register = () => {
       <Logo />
       <Card cardTitle="Register a new account">
         <form onSubmit={register}>
-          <TextInputField
-            label="Email address"
-            type="email"
-            required
-            {...email}
-          />
-          <TextInputField
-            type="password"
-            label="Password"
-            required
-            {...password}
-          />
-          <TextInputField
-            type="password"
-            label="Password (again)"
-            required
-            {...passwordVerify}
-          />
-          <Button isLoading={saving} appearance="primary">
+          <InputGroup>
+            <Input label="Email address" type="email" required {...email} />
+            <Input type="password" label="Password" required {...password} />
+            <Input
+              type="password"
+              label="Password (again)"
+              required
+              {...passwordVerify}
+            />
+          </InputGroup>
+          <Button saving={saving} intent={Intent.Primary}>
             Register
           </Button>
         </form>
