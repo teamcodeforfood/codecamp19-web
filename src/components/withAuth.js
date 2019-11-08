@@ -1,26 +1,44 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { push } from "connected-react-router";
 
-export default function withAuth(ComponentToBeRendered) {
-  class Authenticate extends Component {
-    componentWillMount() {
-      if (this.props.isAuthenticated === false) {
-        this.props.history.push("/auth/login");
-      }
-    }
-    componentWillUpdate(nextProps) {
-      if (nextProps.isAuthenticated === false) {
-        this.props.history.push("/auth/login");
-      }
-    }
-    render() {
-      return <ComponentToBeRendered {...this.props} />;
-    }
-  }
+export default function(ComposedComponent) {
+  const Authenticate = props => {
+    const _isAuthenticated = () => {
+      const token = localStorage.getItem("token");
+      return Boolean(token);
 
-  function mapStateToProps(state) {
-    return { isAuthenticated: state.user.isAuthenticated };
-  }
+      // TODO: we need to verify the token
+    };
 
-  return connect(mapStateToProps)(Authenticate);
+    useEffect(() => {
+      const _checkAndRedirect = () => {
+        const { redirect } = props;
+        const isAuthenticated = _isAuthenticated();
+
+        if (!isAuthenticated) {
+          redirect();
+        }
+      };
+
+      _checkAndRedirect();
+    }, [props]);
+
+    const isAuthenticated = _isAuthenticated();
+
+    return (
+      <div>{isAuthenticated ? <ComposedComponent {...props} /> : null}</div>
+    );
+  };
+
+  const mapDispatchToProps = dispatch => {
+    return {
+      redirect: () => dispatch(push("/auth/login"))
+    };
+  };
+
+  return connect(
+    null,
+    mapDispatchToProps
+  )(Authenticate);
 }
