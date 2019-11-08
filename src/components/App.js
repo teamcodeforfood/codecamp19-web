@@ -11,8 +11,8 @@ export const App = () => (
     <Switch>
       <Route path="/auth/login" component={Login} />
       <Route path="/auth/register" component={Register} />
-      <Route path="/dashboard" component={Dashboard} />
       <Route path="/dashboard/admin/overview" component={AdminOverview} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/" component={Dashboard} />
     </Switch>
   </Router>
