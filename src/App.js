@@ -1,20 +1,21 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
 import "./App.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { Login } from "./components/Users/Login";
+import { Register } from "./components/Users/Register";
+import { Dashboard } from "./components/Dashboard/Dashboard";
 
 function App() {
   return (
-    <div>
+    <Router>
       <Switch>
-        <Route path="/">
-          Hello there
-        </Route>
+        <Route path="/auth/login" component={Login} />
+        <Route path="/auth/register" component={Register} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Route exact path="/" component={Dashboard} />
       </Switch>
-    </div>
+    </Router>
   );
 }
 
