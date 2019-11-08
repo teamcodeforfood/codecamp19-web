@@ -104,9 +104,9 @@ export const AppHeader = () => (
             </Gravatar>
           ) : (
             <>
-              <a href="#">sign up</a>
+              <Link to="/auth/register">Register</Link>
               &nbsp; &nbsp;
-              <a href="#">log in</a>
+              <Link to="/auth/login">Log in</Link>
             </>
           )}
         </User>
