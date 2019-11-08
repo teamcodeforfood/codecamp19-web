@@ -2,7 +2,9 @@ import React from "react";
 import styled from "styled-components";
 import { Density, AppBar, ResponsiveContainer } from "amino-ui";
 import Gravatar from "react-awesome-gravatar";
-import {Logo} from "./Logo";
+import { Logo } from "./Logo";
+import { isAuthenticated } from "../../utils/isAuthenticated";
+import { Link } from "react-router-dom";
 
 const HeaderLayout = styled.div`
   display: flex;
@@ -73,31 +75,41 @@ export const AppHeader = () => (
         <Brand>
           <Logo />
         </Brand>
-        <Nav>
-          <ul>
-            <li>
-              <a href="#" className="active">
-                Overview
-              </a>
-            </li>
-            <li>
-              <a href="#">Teams</a>
-            </li>
-            <li>
-              <a href="#">Scoring</a>
-            </li>
-            <li>
-              <a href="#">Judges</a>
-            </li>
-            <li>
-              <a href="#">Settings</a>
-            </li>
-          </ul>
-        </Nav>
+        {isAuthenticated() ? (
+          <Nav>
+            <ul>
+              <li>
+                <a href="#" className="active">
+                  Overview
+                </a>
+              </li>
+              <li>
+                <a href="#">Teams</a>
+              </li>
+              <li>
+                <a href="#">Scoring</a>
+              </li>
+              <li>
+                <a href="#">Judges</a>
+              </li>
+              <li>
+                <a href="#">Settings</a>
+              </li>
+            </ul>
+          </Nav>
+        ) : null}
         <User>
-          <Gravatar email={"hello@joshbeitler.com"}>
-            {url => <img src={url} alt="Profile picture" />}
-          </Gravatar>
+          {isAuthenticated() ? (
+            <Gravatar email={"hello@joshbeitler.com"}>
+              {url => <img src={url} alt="Profile picture" />}
+            </Gravatar>
+          ) : (
+            <>
+              <Link to="/auth/register">Register</Link>
+              &nbsp; &nbsp;
+              <Link to="/auth/login">Log in</Link>
+            </>
+          )}
         </User>
       </HeaderLayout>
     </ResponsiveContainer>

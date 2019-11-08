@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import { useInput } from "react-hanger";
-import { Button, Card, Input, InputGroup, Intent } from "amino-ui";
+import { Card, Button, Input, Intent, InputGroup } from "amino-ui";
 
 import { LoginWrapper } from "./LoginWrapper";
 import { Logo } from "../Layout/Logo";

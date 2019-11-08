@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button, Card, Input, InputGroup, Intent } from "amino-ui";
+import { Card, Button, Input, InputGroup, Intent } from "amino-ui";
 import { useInput } from "react-hanger";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
@@ -16,7 +16,6 @@ export const Register = () => {
   const email = useInput("");
   const password = useInput("");
   const passwordVerify = useInput("");
-  const name = useInput("");
   const [saving, setSaving] = useState(false);
 
   const register = async e => {
@@ -90,7 +89,6 @@ export const Register = () => {
         <form onSubmit={register}>
           <InputGroup>
             <Input label="Email address" type="email" required {...email} />
-            <Input label="Full name" required {...name} />
             <Input type="password" label="Password" required {...password} />
             <Input
               type="password"
@@ -99,7 +97,7 @@ export const Register = () => {
               {...passwordVerify}
             />
           </InputGroup>
-          <Button disabled={saving} saving={saving} intent={Intent.Primary}>
+          <Button saving={saving} intent={Intent.Primary}>
             Register
           </Button>
         </form>
