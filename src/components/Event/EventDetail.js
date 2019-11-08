@@ -82,7 +82,6 @@ export const EventDetail = () => {
             </Heading>
             <span>123 Sesame Street</span>
           </Card>
-          <Card cardTitle="Map">map</Card>
         </CardStack>
       </ResponsiveContainer>
       <Dialog open={open} label="Dialog title" onClose={() => setOpen(false)}>

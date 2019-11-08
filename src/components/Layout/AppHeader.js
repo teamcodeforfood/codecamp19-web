@@ -1,15 +1,19 @@
 import React from "react";
 import styled from "styled-components";
-import { Density, AppBar, ResponsiveContainer } from "amino-ui";
+import { Color, Density, AppBar, ResponsiveContainer } from "amino-ui";
 import Gravatar from "react-awesome-gravatar";
 import { Logo } from "./Logo";
 import { isAuthenticated } from "../../utils/isAuthenticated";
-import { Link } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const HeaderLayout = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+`;
+
+const StyledAppBar = styled(AppBar)`
+  background: white;
 `;
 
 const Nav = styled.nav`
@@ -68,44 +72,64 @@ const Brand = styled.div`
   flex: 1;
 `;
 
+const Ribbon = styled.div`
+  height: 5px;
+  width: 100%;
+  content: " ";
+  background: ${Color.primary.base};
+  background-image: linear-gradient(
+    45deg,
+    #fa8bff 0%,
+    #2bd2ff 52%,
+    #2bff88 90%
+  );
+`;
+
 export const AppHeader = () => (
-  <AppBar>
-    <ResponsiveContainer>
-      <HeaderLayout>
-        <Brand>
-          <Logo />
-        </Brand>
-        {isAuthenticated() ? (
-          <Nav>
-            <ul>
-              <li>
-                <a href="#" className="active">
-                  Home
-                </a>
-              </li>
-              <li>
-                <a href="#">Events</a>
-              </li>
-              <li>
-                <a href="#">Settings</a>
-              </li>
-            </ul>
-          </Nav>
-        ) : null}
-        <User>
+  <>
+    <Ribbon />
+    <StyledAppBar>
+      <ResponsiveContainer>
+        <HeaderLayout>
+          <Brand>
+            <Logo />
+          </Brand>
           {isAuthenticated() ? (
-            <Gravatar email={"hello@joshbeitler.com"}>
-              {url => <img src={url} alt="Profile picture" />}
-            </Gravatar>
-          ) : (
-            <>
-              <Link to="/auth/register">Register</Link>
-              &nbsp; &nbsp;
-              <Link to="/auth/login">Log in</Link>
-            </>
-          )}
-        </User>
-      </HeaderLayout>
-    </ResponsiveContainer>
-  </AppBar>
+            <Nav>
+              <ul>
+                <li>
+                  <NavLink exact to="/" activeClassName="active">
+                    Home
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/events" activeClassName="active">
+                    Events
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/settings" activeClassName="active">
+                    Settings
+                  </NavLink>
+                </li>
+              </ul>
+            </Nav>
+          ) : null}
+          <User>
+            {isAuthenticated() ? (
+              <Gravatar email={"hello@joshbeitler.com"}>
+                {url => <img src={url} alt="Profile picture" />}
+              </Gravatar>
+            ) : (
+              <>
+                <Link to="/auth/register">Register</Link>
+                &nbsp; &nbsp;
+                <Link to="/auth/login">Log in</Link>
+              </>
+            )}
+          </User>
+        </HeaderLayout>
+      </ResponsiveContainer>
+    </StyledAppBar>
+  </>
 );
