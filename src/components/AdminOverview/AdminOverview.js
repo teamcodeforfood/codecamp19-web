@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Heading, Paragraph, Link, Pane, IconButton, Button, TextInput } from 'evergreen-ui';
+import { Card, Heading, Paragraph, Link, Pane, IconButton, Button } from 'evergreen-ui';
 import styled from 'styled-components';
 
 
@@ -13,6 +13,7 @@ export const AdminOverview = () => {
       <EventInfo></EventInfo>
       <AnnouncementsCard></AnnouncementsCard>
       <Teams></Teams>
+      <Judges></Judges>
     </Wrapper>
   );
 };
@@ -55,7 +56,6 @@ class EventInfo extends React.Component {
           <Card>
             <div>Start Time: <span>{this.state.event.starts_at}</span></div>
             <div>End Time: <span>{this.state.event.ends_at}</span></div>
-            <div>Time remaining: <span>{this.state.event.ends_at - this.state.event.starts_at}</span></div>
           </Card>
         </Pane>
       </Card>
@@ -68,10 +68,10 @@ class AnnouncementsCard extends React.Component {
     super(props);
     this.state = {
       announcements: [
-        "Prepared is me marianne pleasure",
-        "Prepared is me marianne pleasure",
-        "Prepared is me marianne pleasure",
-        "Prepared is me marianne pleasure"
+        "Food is ready in the courtyard",
+        "Don't forget to use the restroom",
+        "Cocaine is in the back closet in room 104",
+        "Wifi is down, stay tuned for further updates..."
       ],
     }
   }
@@ -82,9 +82,6 @@ class AnnouncementsCard extends React.Component {
           <Pane flex={1}>
             <Heading paddingBottom={16} size={900}>Announcements Manager</Heading>
           </Pane>
-          <Pane>
-            <Button onClick={() => alert('implement add')}>Add</Button>
-          </Pane>
         </Pane>
         <div>
           {
@@ -93,6 +90,12 @@ class AnnouncementsCard extends React.Component {
             ))
           }
         </div>
+        <Pane display="flex" paddingTop={16}>
+          <Pane flex={1}></Pane>
+          <Pane>
+            <Button onClick={() => alert('implement add')}>Add</Button>
+          </Pane>
+        </Pane>
       </Card>
     );
   }
@@ -109,7 +112,7 @@ class Announcement extends React.Component {
           <IconButton icon="notifications" onClick={() => alert('Are you sure you want to alert?')} marginRight={16}/>
         </Pane>
         <Pane>
-          <IconButton icon="delete" onClick={() => alert('Are you sure you want to delete?')} marginRight={16}/>
+          <IconButton icon="delete" onClick={() => alert('Are you sure you want to delete?')}/>
         </Pane>
       </Pane>
     );
@@ -138,6 +141,15 @@ class Teams extends React.Component {
         },
         {
           name: "Team 6"
+        },
+        {
+          name: "Team 4"
+        },
+        {
+          name: "Team 5"
+        },
+        {
+          name: "Team 6"
         }
       ],
       expand: false,
@@ -146,7 +158,7 @@ class Teams extends React.Component {
 
   render() {
     return (
-      <Card background="blueTint" padding={16} elevation={1} >
+      <Card background="blueTint" padding={16} elevation={1} marginBottom={16}>
         <Heading size={900} paddingBottom={8}>Teams</Heading>
         <div>
           {
@@ -177,6 +189,71 @@ class Team extends React.Component {
   render() {
     return (
       <Heading>{this.props.team.name}</Heading>
+    );
+  }
+}
+
+class Judges extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      judges: [
+        {
+          name: "Judge 1"
+        },
+        {
+          name: "Judge 2"
+        },
+        {
+          name: "Judge 3"
+        },
+        {
+          name: "Judge 4"
+        },
+        {
+          name: "Judge 5"
+        },
+        {
+          name: "Judge 6"
+        }
+      ],
+      expand: false,
+    }
+  }
+
+  render() {
+    return (
+      <Card background="blueTint" padding={16} elevation={1} >
+        <Heading size={900} paddingBottom={8}>Judges</Heading>
+        <div>
+          {
+            this.state.expand ? (
+              this.state.judges.map((judge) => (
+                <Judge judge={judge}></Judge>
+              ))
+            ) : (
+              this.state.judges.slice(0, 3).map((judge) => (
+                <Judge judge={judge}></Judge>
+              ))
+            )
+          }
+        </div>
+        <Pane display="flex">
+          <Pane flex={1}></Pane>
+          <Button onClick={() => this.setState({expand: !this.state.expand})}> . . . </Button>
+        </Pane>
+      </Card>
+    );
+  }
+}
+
+class Judge extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <Heading>{this.props.judge.name}</Heading>
     );
   }
 }
