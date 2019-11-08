@@ -12,8 +12,6 @@ import { EventList } from "./Event/EventList";
 import { Teams } from "./Teams/Teams";
 import { TeamPage } from "./Teams/TeamPage";
 
-import withAuth from "./withAuth";
-
 export const App = () => (
   <Switch>
     <Route path="/auth/login" component={Login} />
