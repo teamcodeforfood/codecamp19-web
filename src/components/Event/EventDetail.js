@@ -1,23 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
+import { Dialog, Button } from "evergreen-ui";
 import { useParams } from "react-router-dom";
-import { Button, Card, CardStack, ResponsiveContainer, Intent } from "amino-ui";
+import { Card, CardStack, ResponsiveContainer } from "amino-ui";
 
 import { AppHeader } from "../Layout/AppHeader";
 
 export const EventDetail = () => {
   const { id } = useParams();
 
+  const [open, setOpen] = useState(false);
+
   return (
-    <div>
+    <>
       <AppHeader />
       <ResponsiveContainer>
         <CardStack>
           <Card>
             event id: {id}
-            <Button intent={Intent.Primary}>Sign up for this event</Button>
+            <Button appearance="primary" onClick={() => setOpen(true)}>
+              Sign up for this event
+            </Button>
           </Card>
         </CardStack>
       </ResponsiveContainer>
-    </div>
+      <Dialog
+        isShown={open}
+        title="Dialog title"
+        onCloseComplete={() => setOpen(false)}
+        confirmLabel="Custom Label"
+      >
+        Dialog content
+      </Dialog>
+    </>
   );
 };
