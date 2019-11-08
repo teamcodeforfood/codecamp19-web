@@ -5,7 +5,7 @@ import { Login } from "./Users/Login";
 import { Register } from "./Users/Register";
 import { Dashboard } from "./Dashboard/Dashboard";
 import { AdminOverview } from "./AdminOverview/AdminOverview";
-import { AdminSetup } from "./AdminSetup/AdminSetup";
+import withAuth from "./withAuth";
 
 export const App = () => (
   <Router>
@@ -14,9 +14,8 @@ export const App = () => (
       <Route path="/auth/register" component={Register} />
 
       <Route exact path="/dashboard/admin/overview" component={AdminOverview} />
-      <Route exact path="/dashboard/admin/setup" component={AdminSetup} />
 
-      <Route exact path="/" component={Dashboard} />
+      <Route exact path="/" component={withAuth(Dashboard)} />
     </Switch>
   </Router>
 );
