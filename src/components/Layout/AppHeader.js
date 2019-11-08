@@ -4,6 +4,7 @@ import { Density, AppBar, ResponsiveContainer } from "amino-ui";
 import Gravatar from "react-awesome-gravatar";
 import { Logo } from "./Logo";
 import { isAuthenticated } from "../../utils/isAuthenticated";
+import { Link } from "react-router-dom";
 
 const HeaderLayout = styled.div`
   display: flex;
