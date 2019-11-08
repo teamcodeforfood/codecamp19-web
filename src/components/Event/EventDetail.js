@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import {
   Button,
-  Card,
   CardStack,
   ResponsiveContainer,
   Density,
@@ -15,6 +14,8 @@ import { Heading } from "evergreen-ui";
 
 import { AppHeader } from "../Layout/AppHeader";
 import { Dialog } from "../Layout/Dialog";
+import { isAuthenticated } from "../../utils/isAuthenticated";
+import { Card } from "../Layout/Card";
 
 const Header = styled.div`
   height: 150px;
@@ -35,6 +36,11 @@ const Meta = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  h2 {
+    margin-bottom: ${Density.spacing.sm};
+    display: block;
+  }
 `;
 
 const Left = styled.div`
@@ -85,7 +91,7 @@ export const EventDetail = () => {
         </CardStack>
       </ResponsiveContainer>
       <Dialog open={open} label="Dialog title" onClose={() => setOpen(false)}>
-        Dialog content
+        {isAuthenticated() ? <>join or create team</> : <>register</>}
       </Dialog>
     </>
   );

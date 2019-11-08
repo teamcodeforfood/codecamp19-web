@@ -1,6 +1,7 @@
 import React from "react";
-import { Button, Card, CardStack, List, ResponsiveContainer } from "amino-ui";
+import { Button, CardStack, List, ResponsiveContainer } from "amino-ui";
 import { AppHeader } from "../Layout/AppHeader";
+import { Card } from "../Layout/Card";
 
 export const EventList = () => {
   return (

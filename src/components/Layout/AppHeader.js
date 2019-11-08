@@ -14,6 +14,8 @@ const HeaderLayout = styled.div`
 
 const StyledAppBar = styled(AppBar)`
   background: white;
+  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  border: 0;
 `;
 
 const Nav = styled.nav`

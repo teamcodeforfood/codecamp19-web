@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import { useInput } from "react-hanger";
-import { Card, Button, Input, Intent, InputGroup } from "amino-ui";
+import { Button, Input, Intent, InputGroup } from "amino-ui";
 
 import { LoginWrapper } from "./LoginWrapper";
 import { Logo } from "../Layout/Logo";
 import { LoginFooter } from "./LoginFooter";
 import { Link } from "react-router-dom";
+import { Card } from "../Layout/Card";
 
 export const Login = () => {
   const dispatch = useDispatch();

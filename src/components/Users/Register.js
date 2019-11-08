@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Card, Button, Input, InputGroup, Intent } from "amino-ui";
+import { Button, Input, InputGroup, Intent } from "amino-ui";
 import { useInput } from "react-hanger";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { LoginWrapper } from "./LoginWrapper";
 import { Logo } from "../Layout/Logo";
 import { LoginFooter } from "./LoginFooter";
+import { Card } from "../Layout/Card";
 
 export const Register = () => {
   const dispatch = useDispatch();
