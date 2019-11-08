@@ -13,7 +13,7 @@ const Wrapper = styled.div`
     margin: 0 ${Density.spacing.sm};
     font-size: 40px;
     display: flex;
-    height: 100px;
+    height: 80px;
     text-align: center;
     font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   }
@@ -22,6 +22,7 @@ const Wrapper = styled.div`
 export const TeamCode = () => {
   return (
     <Wrapper>
+      <Input />
       <Input />
       <Input />
       <Input />

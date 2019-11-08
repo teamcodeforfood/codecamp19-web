@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
 import {
@@ -14,6 +14,7 @@ import {
 } from "amino-ui";
 import Geopattern from "geopattern";
 import { Heading } from "evergreen-ui";
+import useSWR from "swr";
 
 import { AppHeader } from "../Layout/AppHeader";
 import { Dialog } from "../Layout/Dialog";
@@ -21,6 +22,7 @@ import { isAuthenticated } from "../../utils/isAuthenticated";
 import { Card } from "../Layout/Card";
 import { TeamCode } from "../Team/TeamCode";
 import { Divider } from "../Layout/Divider";
+import { fetcher } from "../../utils/fetcher";
 
 const Header = styled.div`
   height: 150px;
@@ -54,8 +56,14 @@ const Left = styled.div`
 
 export const EventDetail = () => {
   const { id } = useParams();
+  const { data, error } = useSWR(
+    `${process.env.REACT_APP_API_URL}/events/${id}`,
+    fetcher
+  );
 
   const [open, setOpen] = useState(false);
+
+  if (!data) return <div>loading...</div>;
 
   return (
     <>
@@ -63,15 +71,11 @@ export const EventDetail = () => {
       <ResponsiveContainer>
         <CardStack>
           <Card>
-            <Header
-              background={Geopattern.generate(
-                "southern utah codecamp 2019"
-              ).toDataUrl()}
-            />
+            <Header background={Geopattern.generate(data.name).toDataUrl()} />
             <Meta>
               <Left>
                 <Heading size={900} marginTop="0">
-                  Event {id}
+                  {data.name}
                 </Heading>
                 event by ORGANIZER NAME
               </Left>
@@ -84,14 +88,21 @@ export const EventDetail = () => {
             <Heading size={500} marginTop="0">
               About this event
             </Heading>
-            <span>its a cool event</span>
+            <span>{data.description}</span>
 
             <br />
 
             <Heading size={500} marginTop="0">
               Location
             </Heading>
-            <span>123 Sesame Street</span>
+            <span>{data.location}</span>
+
+            <br />
+
+            <Heading size={500} marginTop="0">
+              Max team size
+            </Heading>
+            <span>{data.max_team_size}</span>
           </Card>
         </CardStack>
       </ResponsiveContainer>
