@@ -13,8 +13,8 @@ export const App = () => (
       <Route path="/auth/login" component={Login} />
       <Route path="/auth/register" component={Register} />
 
-      <Route path="/dashboard/admin/setup" component={AdminSetup} />
-      <Route path="/dashboard/admin/overview" component={AdminOverview} />
+      <Route exact path="/dashboard/admin/overview" component={AdminOverview} />
+      <Route exact path="/dashboard/admin/setup" component={AdminSetup} />
 
       <Route path="/dashboard" component={Dashboard} />
       <Route exact path="/" component={Dashboard} />

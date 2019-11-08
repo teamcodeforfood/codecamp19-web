@@ -9,6 +9,12 @@ export const Register = () => {
   const register = e => {
     e.preventDefault();
     e.stopPropagation();
+
+    if (password !== passwordVerify) {
+      // TODO: prettier error message
+      alert("Passwords don't match");
+      return;
+    }
   };
 
   const email = useInput("");
@@ -25,7 +31,7 @@ export const Register = () => {
             <Input label="Email address" type="email" required {...email} />
             <Input label="Full name" required {...name} />
             <Input type="password" label="Password" required {...password} />
-            <Input type="password" required {...passwordVerify} />
+            <Input type="password" label="Password (again)" required {...passwordVerify} />
           </InputGroup>
           <Button intent={Intent.Primary}>Register</Button>
         </form>
