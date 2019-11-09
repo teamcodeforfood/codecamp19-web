@@ -22,6 +22,7 @@ import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
 import { toaster } from "evergreen-ui";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import { Back } from "../Layout/Back";
 
 export const EventAdmin = () => {
   const { id } = useParams();
@@ -131,6 +132,7 @@ export const EventAdmin = () => {
     <>
       <AppHeader />
       <ResponsiveContainer>
+        <Back label={event.name} url={`/events/${id}`} />
         <CardStack>
           <Card
             cardTitle="Event info"
@@ -172,12 +174,14 @@ export const EventAdmin = () => {
                 label="End time"
                 value={endTime}
                 onChange={e => setEndTime(e.target.value)}
+                type="date"
               />
 
               <Input
                 label="Maximum team size"
                 value={maxTeamSize}
                 onChange={e => setMaxTeamSize(e.target.value)}
+                type="date"
               />
             </InputGroup>
           </Card>
@@ -189,7 +193,10 @@ export const EventAdmin = () => {
           <Card
             cardTitle="Divisions"
             actions={
-              <Button intent={Intent.Primary} onClick={() => {}}>
+              <Button
+                intent={Intent.Primary}
+                onClick={() => goto(`/events/${id}/divisions/new`)}
+              >
                 Create new division
               </Button>
             }

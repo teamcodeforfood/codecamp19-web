@@ -13,7 +13,7 @@ import { createPortal } from "react-dom";
 import styled from "styled-components";
 
 import { CSSTransition } from "react-transition-group";
-import { CloseIcon } from "../icons/CloseIcon";
+import { CloseIcon } from "../../icons/CloseIcon";
 
 const Backdrop = styled.div`
   width: 100vw;

@@ -22,6 +22,8 @@ import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
 import { toaster } from "evergreen-ui";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import { Back } from "../Layout/Back";
+import { CategoryEdit } from "./CategoryEdit";
 
 export const DivisionDetail = () => {
   const { id, division_id } = useParams();
@@ -32,6 +34,67 @@ export const DivisionDetail = () => {
     `${process.env.REACT_APP_API_URL}/events/${id}/divisions/${division_id}`,
     fetcher
   );
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [savingDetails, setSavingDetails] = useState(false);
+  const [editCategory, setEditCategory] = useState(false);
+  const [category, setCategory] = useState(true);
+
+  useEffect(() => {
+    if (division && division.division) {
+      setName(division.division.name || "");
+      setDescription(division.division.description || "");
+    }
+  }, [division]);
+
+  const saveDivisionDetails = async () => {
+    setSavingDetails(true);
+
+    try {
+      if (division_id !== "new") {
+        const response = await fetcher(
+          `${process.env.REACT_APP_API_URL}/events/${id}/divisions/${division_id}`,
+          {
+            method: "PATCH",
+            body: JSON.stringify({
+              name,
+              description
+            })
+          }
+        );
+
+        if (response) {
+          toaster.success("Division details updated successfully");
+        } else {
+          toaster.danger("Couldn't update division details");
+        }
+      } else {
+        const response = await fetcher(
+          `${process.env.REACT_APP_API_URL}/events/${id}/divisions`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              name,
+              description,
+              event_id: id
+            })
+          }
+        );
+
+        if (response) {
+          toaster.success("Division created successfully");
+          goto(`/events/${id}/divisions/${response.division.id}`);
+        } else {
+          toaster.danger("Couldn't create division");
+        }
+      }
+    } catch (e) {
+      toaster.danger("Couldn't create division");
+    }
+
+    setSavingDetails(false);
+  };
 
   if (!division)
     return (
@@ -44,34 +107,60 @@ export const DivisionDetail = () => {
     <>
       <AppHeader />
       <ResponsiveContainer>
+        <Back label="Event admin" url={`/events/${id}/admin`} />
         <CardStack>
           <Card
             cardTitle="Division info"
             actions={
               <Button
-                // disabled={savingDetails || !event}
-                // saving={savingDetails}
+                disabled={savingDetails || !division}
+                saving={savingDetails}
                 intent={Intent.Primary}
-                // onClick={saveEventDetails}
+                onClick={() => saveDivisionDetails()}
               >
                 Save details
               </Button>
             }
-          ></Card>
-          <Card
-            cardTitle="Categories"
-            actions={
-              <Button
-              // disabled={savingDetails || !event}
-              // saving={savingDetails}
-              // onClick={saveEventDetails}
-              >
-                Create category
-              </Button>
-            }
-          ></Card>
+          >
+            <InputGroup>
+              <Input
+                label="Name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+              />
+              <Input
+                label="Description"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+              />
+            </InputGroup>
+          </Card>
+
+          {division_id !== "new" ? (
+            <Card
+              cardTitle="Categories"
+              actions={
+                <Button
+                  onClick={() => {
+                    setCategory(null);
+                    setEditCategory(true);
+                  }}
+                >
+                  Create category
+                </Button>
+              }
+            ></Card>
+          ) : null}
         </CardStack>
       </ResponsiveContainer>
+
+      <CategoryEdit
+        open={editCategory}
+        onClose={() => setEditCategory(false)}
+        category_id={category}
+        divisionId={division_id}
+        id={id}
+      />
     </>
   );
 };
