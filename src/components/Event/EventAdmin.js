@@ -22,6 +22,7 @@ import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
 import { toaster } from "evergreen-ui";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import { Back } from "../Layout/Back";
 
 export const EventAdmin = () => {
   const { id } = useParams();
@@ -131,6 +132,7 @@ export const EventAdmin = () => {
     <>
       <AppHeader />
       <ResponsiveContainer>
+        <Back label={event.name} url={`/events/${id}`} />
         <CardStack>
           <Card
             cardTitle="Event info"

@@ -22,6 +22,7 @@ import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
 import { toaster } from "evergreen-ui";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
+import { Back } from "../Layout/Back";
 
 export const DivisionDetail = () => {
   const { id, division_id } = useParams();
@@ -103,6 +104,7 @@ export const DivisionDetail = () => {
     <>
       <AppHeader />
       <ResponsiveContainer>
+        <Back label="Event admin" url={`/events/${id}/admin`} />
         <CardStack>
           <Card
             cardTitle="Division info"
