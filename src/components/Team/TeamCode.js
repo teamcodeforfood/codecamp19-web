@@ -4,7 +4,8 @@ import { Density, Input, Color, Surface, ListItem } from "amino-ui";
 import { useInput } from "react-hanger";
 import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher";
-import { useSelector } from "react-redux";
+import jwtDecode from "jwt-decode";
+import { Dialog } from "../Layout/Dialog";
 
 const Wrapper = styled.div`
   display: flex;
@@ -27,7 +28,7 @@ const Team = styled.div`
   padding: ${Density.spacing.md};
 `;
 
-export const TeamCode = ({ eventId }) => {
+export const TeamCode = ({ eventId, onClose, open, title }) => {
   const teamCode = useInput("");
 
   const { data: team, error } = useSWR(
@@ -37,35 +38,46 @@ export const TeamCode = ({ eventId }) => {
 
   const joinTeam = async id => {
     // TODO: check if team is full
+    const token = jwtDecode(localStorage.getItem("token"));
+
     const response = await fetcher(
       `${process.env.REACT_APP_API_URL}/events/${eventId}/teams/joinTeam`,
       {
+        method: "POST",
         body: JSON.stringify({
-          team_id: team.id,
-          user_id: user.id
+          team_id: id,
+          user_id: token.user.id
         })
       }
     );
+
+    if (response) {
+      // it worked
+      alert("you're in!");
+      onClose();
+    }
   };
 
   return (
-    <Wrapper>
-      <Input
-        spellCheck={false}
-        label="Have a team code?"
-        placeholder="00000000"
-        {...teamCode}
-      />
+    <Dialog open={open} label={title} onClose={onClose}>
+      <Wrapper>
+        <Input
+          spellCheck={false}
+          label="Have a team code?"
+          placeholder="00000000"
+          {...teamCode}
+        />
 
-      {team && team.name ? (
-        <Team>
-          <ListItem
-            onClick={() => joinTeam(team.id)}
-            icon="/images/join-team.svg"
-            label={`Join team ${team.name}`}
-          />
-        </Team>
-      ) : null}
-    </Wrapper>
+        {team && team.name ? (
+          <Team>
+            <ListItem
+              onClick={() => joinTeam(team.id)}
+              icon="/images/join-team.svg"
+              label={`Join team ${team.name}`}
+            />
+          </Team>
+        ) : null}
+      </Wrapper>
+    </Dialog>
   );
 };

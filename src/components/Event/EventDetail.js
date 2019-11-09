@@ -181,14 +181,12 @@ export const EventDetail = () => {
         )}
       </Dialog>
 
-      {/*TODO: move dialog into TeamCode*/}
-      <Dialog
+      <TeamCode
+        eventId={id}
+        title={`Join existing team for ${event.name}`}
         open={joinTeam}
-        label={`Join a team for ${event.name}`}
         onClose={() => setJoinTeam(false)}
-      >
-        <TeamCode eventId={id} />
-      </Dialog>
+      />
 
       <CreateTeam
         title={`Create new team for ${event.name}`}
