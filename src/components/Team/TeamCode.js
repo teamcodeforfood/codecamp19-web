@@ -6,6 +6,7 @@ import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher";
 import jwtDecode from "jwt-decode";
 import { Dialog } from "../Layout/Dialog";
+import { joinTeam } from "../../utils/joinTeam";
 
 const Wrapper = styled.div`
   display: flex;
@@ -45,26 +46,9 @@ export const TeamCode = ({ eventId, onClose, open, title }) => {
     fetcher
   );
 
-  const joinTeam = async id => {
-    // TODO: check if team is full
-    const token = jwtDecode(localStorage.getItem("token"));
-
-    const response = await fetcher(
-      `${process.env.REACT_APP_API_URL}/events/${eventId}/teams/joinTeam`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          team_id: id,
-          user_id: token.user.id
-        })
-      }
-    );
-
-    if (response) {
-      // it worked
-      alert("you're in!");
-      onClose();
-    }
+  const onJoin = () => {
+    alert("it works");
+    onClose();
   };
 
   return (
@@ -80,7 +64,11 @@ export const TeamCode = ({ eventId, onClose, open, title }) => {
         {team && team.name && event && teamParticipants ? (
           <Team>
             <ListItem
-              onClick={() => joinTeam(team.id)}
+              onClick={() =>
+                joinTeam(team.id, eventId)
+                  .then(onJoin)
+                  .catch(onClose)
+              }
               icon="/images/join-team.svg"
               label={`Join team ${team.name}`}
               subtitle={`${teamParticipants.length} out of ${event.max_team_size}`}

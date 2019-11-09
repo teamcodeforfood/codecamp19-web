@@ -127,7 +127,15 @@ const Close = styled.div`
   }
 `;
 
-export const Dialog = ({ open, action, saving, label, onClose, children }) => {
+export const Dialog = ({
+  actionText,
+  open,
+  action,
+  saving,
+  label,
+  onClose,
+  children
+}) => {
   const [active, setActive] = useState(open || false);
 
   useEffect(() => {
@@ -152,14 +160,16 @@ export const Dialog = ({ open, action, saving, label, onClose, children }) => {
           <Button disabled={saving} onClick={close}>
             Close
           </Button>
-          {/*<Button*/}
-          {/*  intent={Intent.Primary}*/}
-          {/*  onClick={action}*/}
-          {/*  saving={saving}*/}
-          {/*  disabled={saving}*/}
-          {/*>*/}
-          {/*  Save*/}
-          {/*</Button>*/}
+          {action && actionText ? (
+            <Button
+              intent={Intent.Primary}
+              onClick={action}
+              saving={saving}
+              disabled={saving}
+            >
+              {actionText}
+            </Button>
+          ) : null}
         </EndStackView>
       </>
     </ModalFooter>

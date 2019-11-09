@@ -43,7 +43,6 @@ const Nav = styled.nav`
     font-weight: 500;
     opacity: 0.8;
     transition: all 150ms ease-in-out;
-    border-bottom: 3px solid transparent;
     box-sizing: border-box;
     border-radius: 50px;
   }
