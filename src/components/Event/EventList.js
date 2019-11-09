@@ -12,7 +12,7 @@ export const EventList = () => {
         <CardStack>
           <Card
             cardTitle="My events"
-            action={<Button>Create new event</Button>}
+            actions={<Button>Create new event</Button>}
           >
             <List>events</List>
           </Card>

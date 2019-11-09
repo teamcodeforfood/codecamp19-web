@@ -26,14 +26,24 @@ import { fetcher } from "../../utils/fetcher";
 import { LoadingLayout } from "../Layout/LoadingLayout";
 import { CreateTeam } from "../Team/CreateTeam";
 import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
+import { useSelector } from "react-redux";
 
 const Header = styled.div`
-  height: 150px;
+  height: 200px;
   background: ${p => p.background};
   margin: -${Density.spacing.md};
   margin-bottom: 0;
   border-top-left-radius: ${Surface.radius.base};
   border-top-right-radius: ${Surface.radius.base};
+`;
+
+const Actions = styled.div`
+  display: flex;
+  flex-direction: row;
+
+  button {
+    margin-left: ${Density.spacing.sm};
+  }
 `;
 
 const Meta = styled.div`
@@ -58,6 +68,7 @@ const Left = styled.div`
 `;
 
 export const EventDetail = () => {
+  const user = useSelector(state => state.user);
   const { id } = useParams();
   const { data: event } = useSWR(
     `${process.env.REACT_APP_API_URL}/events/${id}`,
@@ -94,9 +105,14 @@ export const EventDetail = () => {
                 Created by {owner.user.email}
               </Left>
 
-              <Button intent={Intent.Primary} onClick={() => setOpen(true)}>
-                Sign up for this event
-              </Button>
+              <Actions>
+                {user.role === "admin" ? (
+                  <Button onClick={() => {}}>Admin</Button>
+                ) : null}
+                <Button intent={Intent.Primary} onClick={() => setOpen(true)}>
+                  Sign up for this event
+                </Button>
+              </Actions>
             </Meta>
 
             <Heading size={500} marginTop="0">
@@ -164,12 +180,14 @@ export const EventDetail = () => {
           <>register</>
         )}
       </Dialog>
+
+      {/*TODO: move dialog into TeamCode*/}
       <Dialog
         open={joinTeam}
         label={`Join a team for ${event.name}`}
         onClose={() => setJoinTeam(false)}
       >
-        <TeamCode />
+        <TeamCode eventId={id} />
       </Dialog>
 
       <CreateTeam

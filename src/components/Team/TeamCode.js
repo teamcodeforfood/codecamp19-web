@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import styled from "styled-components";
 import { Density, Input } from "amino-ui";
 import { useInput } from "react-hanger";
-import useSWR from "swr/dist/use-swr";
+import useSWR from "swr";
 import { fetcher } from "../../utils/fetcher";
 
 const Wrapper = styled.div`
@@ -19,11 +19,11 @@ const Wrapper = styled.div`
   }
 `;
 
-export const TeamCode = () => {
+export const TeamCode = ({ eventId }) => {
   const teamCode = useInput("");
 
-  const { team, error } = useSWR(
-    `${process.env.REACT_APP_API_URL}/teams/${teamCode.value}`,
+  const { data: team } = useSWR(
+    `${process.env.REACT_APP_API_URL}/events/${eventId}/teams/${teamCode.value}`,
     fetcher
   );
 
@@ -34,7 +34,6 @@ export const TeamCode = () => {
   return (
     <Wrapper>
       <Input
-        autoComplete={false}
         spellCheck={false}
         label="Have a team code?"
         placeholder="00000000"

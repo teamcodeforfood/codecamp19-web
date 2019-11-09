@@ -1,10 +1,7 @@
-const token = localStorage.getItem("token");
-
 export const fetcher = (url, options = {}) =>
   fetch(url, {
     ...options,
     headers: {
-      Authorization: `Bearer ${token}`
-    },
-    mode: "cors"
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
   }).then(r => r.json());
