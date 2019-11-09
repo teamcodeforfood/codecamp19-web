@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Color, Density, AppBar, ResponsiveContainer } from "amino-ui";
+import { Color, Density, AppBar } from "amino-ui";
 import Gravatar from "react-awesome-gravatar";
 import { Logo } from "./Logo";
 import { isAuthenticated } from "../../utils/isAuthenticated";
 import { NavLink, Link } from "react-router-dom";
+import { ResponsiveContainer } from "./ResponsiveContainer";
 
 const HeaderLayout = styled.div`
   display: flex;
@@ -13,8 +14,7 @@ const HeaderLayout = styled.div`
 `;
 
 const StyledAppBar = styled(AppBar)`
-  background: white;
-  box-shadow: 0 0 15px 0 rgba(0, 0, 0, 0.1);
+  background: #f8fafc;
   border: 0;
 `;
 
@@ -34,17 +34,17 @@ const Nav = styled.nav`
   }
 
   a {
-    margin: 0 ${Density.spacing.sm};
+    padding: 0 ${Density.spacing.sm};
     display: inline-block;
-    height: 72px;
-    line-height: 72px;
+    height: 32px;
+    line-height: 32px;
     text-decoration: none;
     color: inherit;
     font-weight: 500;
     opacity: 0.8;
     transition: all 150ms ease-in-out;
-    border-bottom: 3px solid transparent;
     box-sizing: border-box;
+    border-radius: 50px;
   }
 
   a:hover {
@@ -52,9 +52,10 @@ const Nav = styled.nav`
   }
 
   a.active {
-    border-bottom: 3px solid #448fe1;
-    color: #448fe1;
+    background-color: #448fe1;
     opacity: 1;
+    color: white;
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
   }
 `;
 
