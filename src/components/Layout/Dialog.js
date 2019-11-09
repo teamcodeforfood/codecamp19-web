@@ -69,8 +69,8 @@ const Content = styled.div`
   //// font-size: 14px;
   padding: ${Density.spacing.md};
   max-height: 75vh;
-  overflow: scroll;
-  overflow: -moz-scrollbars-none;
+  //overflow: scroll;
+  //overflow: -moz-scrollbars-none;
   -ms-overflow-style: none;
   background: white;
   border-radius: 8px;

@@ -62,6 +62,8 @@ export const EventDetail = () => {
   );
 
   const [open, setOpen] = useState(false);
+  const [createTeam, setCreateTeam] = useState(false);
+  const [joinTeam, setJoinTeam] = useState(false);
 
   if (!data) return <div>loading...</div>;
 
@@ -106,21 +108,40 @@ export const EventDetail = () => {
           </Card>
         </CardStack>
       </ResponsiveContainer>
-      <Dialog open={open} label="Dialog title" onClose={() => setOpen(false)}>
+      <Dialog
+        open={open}
+        label={`Register for ${data.name}`}
+        onClose={() => setOpen(false)}
+      >
         {isAuthenticated() ? (
-          <>
-            Have a team code? Enter it here:
-            <TeamCode />
-            <Divider />
+          <List>
             <ListItem
-              icon="/images/create_team.svg"
+              icon="/images/join-team.svg"
+              onClick={() => {
+                setOpen(false);
+                setJoinTeam(true);
+              }}
+              label="Join an existing team"
+              subtitle="Already have a team? Select this option to join it."
+            />
+            <ListItem
+              icon="/images/create-team.svg"
               onClick={() => {}}
               label="Create a new team"
+              subtitle="Don't have a team or looking to start a new one? Select this option."
             />
-          </>
+          </List>
         ) : (
           <>register</>
         )}
+      </Dialog>
+      <Dialog
+        open={joinTeam}
+        label={`Join a team for ${data.name}`}
+        onClose={() => setJoinTeam(false)}
+      >
+        Have a team code? Enter it here:
+        <TeamCode />
       </Dialog>
     </>
   );
