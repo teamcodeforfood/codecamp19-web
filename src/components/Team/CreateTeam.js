@@ -24,7 +24,8 @@ export const CreateTeam = ({ title, open, onClose, eventId }) => {
           method: "POST",
           body: JSON.stringify({
             name: name.value,
-            division_id: 1 // TODO: actual division from dropdown
+            division_id: 1, // TODO: actual division from dropdown
+            event_id: Number(eventId)
           })
         }
       );

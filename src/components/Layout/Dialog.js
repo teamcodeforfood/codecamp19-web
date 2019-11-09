@@ -152,14 +152,14 @@ export const Dialog = ({ open, action, saving, label, onClose, children }) => {
           <Button disabled={saving} onClick={close}>
             Close
           </Button>
-          <Button
-            intent={Intent.Primary}
-            onClick={action}
-            saving={saving}
-            disabled={saving}
-          >
-            Save
-          </Button>
+          {/*<Button*/}
+          {/*  intent={Intent.Primary}*/}
+          {/*  onClick={action}*/}
+          {/*  saving={saving}*/}
+          {/*  disabled={saving}*/}
+          {/*>*/}
+          {/*  Save*/}
+          {/*</Button>*/}
         </EndStackView>
       </>
     </ModalFooter>

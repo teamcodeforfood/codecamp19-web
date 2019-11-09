@@ -9,6 +9,7 @@ import { Logo } from "../Layout/Logo";
 import { LoginFooter } from "./LoginFooter";
 import { Link } from "react-router-dom";
 import { Card } from "../Layout/Card";
+import { fetcher } from "../../utils/fetcher";
 
 export const Login = () => {
   const dispatch = useDispatch();
