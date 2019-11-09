@@ -174,12 +174,14 @@ export const EventAdmin = () => {
                 label="End time"
                 value={endTime}
                 onChange={e => setEndTime(e.target.value)}
+                type="date"
               />
 
               <Input
                 label="Maximum team size"
                 value={maxTeamSize}
                 onChange={e => setMaxTeamSize(e.target.value)}
+                type="date"
               />
             </InputGroup>
           </Card>

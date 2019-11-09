@@ -23,6 +23,7 @@ import { toaster } from "evergreen-ui";
 import { useDispatch } from "react-redux";
 import { push } from "connected-react-router";
 import { Back } from "../Layout/Back";
+import { CategoryEdit } from "./CategoryEdit";
 
 export const DivisionDetail = () => {
   const { id, division_id } = useParams();
@@ -37,6 +38,8 @@ export const DivisionDetail = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [savingDetails, setSavingDetails] = useState(false);
+  const [editCategory, setEditCategory] = useState(false);
+  const [category, setCategory] = useState(true);
 
   useEffect(() => {
     if (division && division.division) {
@@ -136,11 +139,28 @@ export const DivisionDetail = () => {
           {division_id !== "new" ? (
             <Card
               cardTitle="Categories"
-              actions={<Button>Create category</Button>}
+              actions={
+                <Button
+                  onClick={() => {
+                    setCategory(null);
+                    setEditCategory(true);
+                  }}
+                >
+                  Create category
+                </Button>
+              }
             ></Card>
           ) : null}
         </CardStack>
       </ResponsiveContainer>
+
+      <CategoryEdit
+        open={editCategory}
+        onClose={() => setEditCategory(false)}
+        category_id={category}
+        divisionId={division_id}
+        id={id}
+      />
     </>
   );
 };
