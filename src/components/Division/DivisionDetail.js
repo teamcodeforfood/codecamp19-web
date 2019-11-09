@@ -33,6 +33,44 @@ export const DivisionDetail = () => {
     fetcher
   );
 
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [savingDetails, setSavingDetails] = useState(false);
+
+  useEffect(() => {
+    if (division) {
+      setName(division.division.name || "");
+      setDescription(division.division.description || "");
+    }
+  }, [division]);
+
+  const saveDivisionDetails = async () => {
+    setSavingDetails(true);
+
+    try {
+      const response = await fetcher(
+        `${process.env.REACT_APP_API_URL}/events/${id}/divisions/${division_id}`,
+        {
+          method: "PATCH",
+          body: JSON.stringify({
+            name,
+            description
+          })
+        }
+      );
+
+      if (response) {
+        toaster.success("Division details updated successfully");
+      } else {
+        toaster.danger("Couldn't update division details");
+      }
+    } catch (e) {
+      toaster.danger("Couldn't update division details");
+    }
+
+    setSavingDetails(false);
+  };
+
   if (!division)
     return (
       <LoadingLayout>
@@ -49,26 +87,31 @@ export const DivisionDetail = () => {
             cardTitle="Division info"
             actions={
               <Button
-                // disabled={savingDetails || !event}
-                // saving={savingDetails}
+                disabled={savingDetails || !division}
+                saving={savingDetails}
                 intent={Intent.Primary}
-                // onClick={saveEventDetails}
+                onClick={() => saveDivisionDetails()}
               >
                 Save details
               </Button>
             }
-          ></Card>
+          >
+            <InputGroup>
+              <Input
+                label="Name"
+                value={name}
+                onChange={e => setName(e.target.value)}
+              />
+              <Input
+                label="Description"
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+              />
+            </InputGroup>
+          </Card>
           <Card
             cardTitle="Categories"
-            actions={
-              <Button
-              // disabled={savingDetails || !event}
-              // saving={savingDetails}
-              // onClick={saveEventDetails}
-              >
-                Create category
-              </Button>
-            }
+            actions={<Button>Create category</Button>}
           ></Card>
         </CardStack>
       </ResponsiveContainer>
