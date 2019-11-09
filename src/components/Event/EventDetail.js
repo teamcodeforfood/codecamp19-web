@@ -28,6 +28,7 @@ import { fetcher } from "../../utils/fetcher";
 import { LoadingLayout } from "../Layout/LoadingLayout";
 import { CreateTeam } from "../Team/CreateTeam";
 import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
+import jwtDecode from "jwt-decode";
 
 const Header = styled.div`
   height: 200px;
@@ -96,6 +97,22 @@ export const EventDetail = () => {
     () => `${process.env.REACT_APP_API_URL}/users/${event.owner_user_id}`,
     fetcher
   );
+  const { data: participants } = useSWR(
+    `${process.env.REACT_APP_API_URL}/events/${id}/participants`,
+    fetcher
+  );
+
+  const isRegistered = () => {
+    if (!participants) {
+      return false;
+    }
+
+    const token = jwtDecode(localStorage.getItem("token"));
+
+    return participants.users.filter(
+      participant => participant.user_id === token.user.id
+    ).length;
+  };
 
   const [open, setOpen] = useState(false);
   const [createTeam, setCreateTeam] = useState(false);
@@ -127,9 +144,11 @@ export const EventDetail = () => {
                 {user.role === "admin" ? (
                   <Button onClick={() => {}}>Admin</Button>
                 ) : null}
-                <Button intent={Intent.Primary} onClick={() => setOpen(true)}>
-                  Sign up for this event
-                </Button>
+                {!isRegistered() ? (
+                  <Button intent={Intent.Primary} onClick={() => setOpen(true)}>
+                    Sign up for this event
+                  </Button>
+                ) : null}
               </Actions>
             </Meta>
 
@@ -168,16 +187,17 @@ export const EventDetail = () => {
             </Info>
           </Card>
 
-          {/*TODO: only show if user has a team */}
-          <Card cardTitle="Registration info">
-            <List>
-              <ListItem
-                icon="/images/join-team.svg"
-                label="you're on team code for food!"
-                onClick={() => {}}
-              />
-            </List>
-          </Card>
+          {isRegistered() ? (
+            <Card cardTitle="Registration info">
+              <List>
+                <ListItem
+                  icon="/images/join-team.svg"
+                  label="you're on team code for food!"
+                  onClick={() => {}}
+                />
+              </List>
+            </Card>
+          ) : null}
         </CardStack>
       </ResponsiveContainer>
 
