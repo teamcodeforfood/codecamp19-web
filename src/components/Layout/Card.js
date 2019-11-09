@@ -5,12 +5,13 @@ import { Text, TextStyle, Color } from "amino-ui";
 
 const StyledCard = styled.section`
   background: white;
+  border: 0;
   border-radius: ${p => p.theme.Surface.radius.base};
   padding: ${props => props.theme.Density.spacing.md};
-  border: 1px solid ${Color.gray.base};
   display: flex;
   flex: 1;
   flex-direction: column;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 5px 10px 0px;
 `;
 
 const Header = styled.header`

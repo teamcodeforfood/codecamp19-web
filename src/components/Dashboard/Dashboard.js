@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { ResponsiveContainer } from "amino-ui";
 import { Route } from "react-router-dom";
 
 import { AdminOverview } from "../AdminOverview/AdminOverview";
 import { AppHeader } from "../Layout/AppHeader";
 import { AdminSetup } from "../AdminSetup/AdminSetup";
 import withAuth from "../withAuth";
+import { ResponsiveContainer } from "amino-ui";
 
 export const Dashboard = () => {
   const user = useSelector(state => state.user);

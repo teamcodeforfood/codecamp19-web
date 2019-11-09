@@ -4,7 +4,6 @@ import { useParams } from "react-router-dom";
 import {
   Button,
   CardStack,
-  ResponsiveContainer,
   Density,
   Surface,
   Intent,
@@ -25,6 +24,8 @@ import { TeamCode } from "../Team/TeamCode";
 import { Divider } from "../Layout/Divider";
 import { fetcher } from "../../utils/fetcher";
 import { LoadingLayout } from "../Layout/LoadingLayout";
+import { CreateTeam } from "../Team/CreateTeam";
+import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
 
 const Header = styled.div`
   height: 150px;
@@ -58,8 +59,12 @@ const Left = styled.div`
 
 export const EventDetail = () => {
   const { id } = useParams();
-  const { data, error } = useSWR(
+  const { data: event } = useSWR(
     `${process.env.REACT_APP_API_URL}/events/${id}`,
+    fetcher
+  );
+  const { data: owner } = useSWR(
+    () => `${process.env.REACT_APP_API_URL}/users/${event.owner_user_id}`,
     fetcher
   );
 
@@ -67,7 +72,7 @@ export const EventDetail = () => {
   const [createTeam, setCreateTeam] = useState(false);
   const [joinTeam, setJoinTeam] = useState(false);
 
-  if (!data)
+  if (!event || !owner)
     return (
       <LoadingLayout>
         <Spinner />
@@ -80,13 +85,13 @@ export const EventDetail = () => {
       <ResponsiveContainer>
         <CardStack>
           <Card>
-            <Header background={Geopattern.generate(data.name).toDataUrl()} />
+            <Header background={Geopattern.generate(event.name).toDataUrl()} />
             <Meta>
               <Left>
                 <Heading size={900} marginTop="0">
-                  {data.name}
+                  {event.name}
                 </Heading>
-                event by ORGANIZER NAME
+                Created by {owner.user.email}
               </Left>
 
               <Button intent={Intent.Primary} onClick={() => setOpen(true)}>
@@ -97,27 +102,41 @@ export const EventDetail = () => {
             <Heading size={500} marginTop="0">
               About this event
             </Heading>
-            <span>{data.description}</span>
+            <span>{event.description}</span>
 
             <br />
 
             <Heading size={500} marginTop="0">
               Location
             </Heading>
-            <span>{data.location}</span>
+            <span>{event.location}</span>
+
+            <br />
+
+            <Heading size={500} marginTop="0">
+              Starts at
+            </Heading>
+            <span>{event.starts_at}</span>
+
+            <br />
+
+            <Heading size={500} marginTop="0">
+              Ends at
+            </Heading>
+            <span>{event.ends_at}</span>
 
             <br />
 
             <Heading size={500} marginTop="0">
               Max team size
             </Heading>
-            <span>{data.max_team_size}</span>
+            <span>{event.max_team_size}</span>
           </Card>
         </CardStack>
       </ResponsiveContainer>
       <Dialog
         open={open}
-        label={`Register for ${data.name}`}
+        label={`Register for ${event.name}`}
         onClose={() => setOpen(false)}
       >
         {isAuthenticated() ? (
@@ -147,18 +166,18 @@ export const EventDetail = () => {
       </Dialog>
       <Dialog
         open={joinTeam}
-        label={`Join a team for ${data.name}`}
+        label={`Join a team for ${event.name}`}
         onClose={() => setJoinTeam(false)}
       >
         <TeamCode />
       </Dialog>
-      <Dialog
+
+      <CreateTeam
+        title={`Create new team for ${event.name}`}
         open={createTeam}
-        label={`Create a team for ${data.name}`}
         onClose={() => setCreateTeam(false)}
-      >
-        create a new team
-      </Dialog>
+        eventId={id}
+      />
     </>
   );
 };
