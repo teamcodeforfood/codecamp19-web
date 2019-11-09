@@ -31,8 +31,17 @@ const Team = styled.div`
 export const TeamCode = ({ eventId, onClose, open, title }) => {
   const teamCode = useInput("");
 
-  const { data: team, error } = useSWR(
+  const { data: team } = useSWR(
     `${process.env.REACT_APP_API_URL}/events/${eventId}/teams/${teamCode.value}`,
+    fetcher
+  );
+  const { data: event } = useSWR(
+    `${process.env.REACT_APP_API_URL}/events/${eventId}`,
+    fetcher
+  );
+  const { data: teamParticipants } = useSWR(
+    () =>
+      `${process.env.REACT_APP_API_URL}/events/${eventId}/teams/${team.id}/participants`,
     fetcher
   );
 
@@ -68,12 +77,13 @@ export const TeamCode = ({ eventId, onClose, open, title }) => {
           {...teamCode}
         />
 
-        {team && team.name ? (
+        {team && team.name && event && teamParticipants ? (
           <Team>
             <ListItem
               onClick={() => joinTeam(team.id)}
               icon="/images/join-team.svg"
               label={`Join team ${team.name}`}
+              subtitle={`${teamParticipants.length} out of ${event.max_team_size}`}
             />
           </Team>
         ) : null}

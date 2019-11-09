@@ -15,6 +15,8 @@ import {
 import Geopattern from "geopattern";
 import { Heading } from "evergreen-ui";
 import useSWR from "swr";
+import { format } from "date-fns";
+import { useSelector } from "react-redux";
 
 import { AppHeader } from "../Layout/AppHeader";
 import { Dialog } from "../Layout/Dialog";
@@ -26,7 +28,6 @@ import { fetcher } from "../../utils/fetcher";
 import { LoadingLayout } from "../Layout/LoadingLayout";
 import { CreateTeam } from "../Team/CreateTeam";
 import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
-import { useSelector } from "react-redux";
 
 const Header = styled.div`
   height: 200px;
@@ -43,6 +44,23 @@ const Actions = styled.div`
 
   button {
     margin-left: ${Density.spacing.sm};
+  }
+`;
+
+const Info = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: ${Density.spacing.sm};
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+
+  img {
+    width: 32px;
+    height: 32px;
+    margin-right: ${Density.spacing.xs};
   }
 `;
 
@@ -120,36 +138,49 @@ export const EventDetail = () => {
             </Heading>
             <span>{event.description}</span>
 
-            <br />
+            <Divider />
 
-            <Heading size={500} marginTop="0">
-              Location
-            </Heading>
-            <span>{event.location}</span>
+            {/*<br />*/}
 
-            <br />
+            {/*<Heading size={500} marginTop="0">*/}
+            {/*  Location*/}
+            {/*</Heading>*/}
+            {/*<span>{event.location}</span>*/}
 
-            <Heading size={500} marginTop="0">
-              Starts at
-            </Heading>
-            <span>{event.starts_at}</span>
+            <Info>
+              <img src="/images/date-icon.svg" />
+              <span>
+                Starts at{" "}
+                {format(new Date(event.starts_at), "MM/dd/yyyy h:mm a")}
+              </span>
+            </Info>
 
-            <br />
+            <Info>
+              <img src="/images/date-icon.svg" />
+              <span>
+                Ends at {format(new Date(event.starts_at), "MM/dd/yyyy h:mm a")}
+              </span>
+            </Info>
 
-            <Heading size={500} marginTop="0">
-              Ends at
-            </Heading>
-            <span>{event.ends_at}</span>
+            <Info>
+              <img src="/images/team-icon.svg" />
+              <span>Up to {event.max_team_size} members per team</span>
+            </Info>
+          </Card>
 
-            <br />
-
-            <Heading size={500} marginTop="0">
-              Max team size
-            </Heading>
-            <span>{event.max_team_size}</span>
+          {/*TODO: only show if user has a team */}
+          <Card cardTitle="Registration info">
+            <List>
+              <ListItem
+                icon="/images/join-team.svg"
+                label="you're on team code for food!"
+                onClick={() => {}}
+              />
+            </List>
           </Card>
         </CardStack>
       </ResponsiveContainer>
+
       <Dialog
         open={open}
         label={`Register for ${event.name}`}

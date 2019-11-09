@@ -20,7 +20,7 @@ const Header = styled.header`
   height: 64px;
   flex-direction: row;
   align-items: center;
-  border-bottom: 1px solid ${p => p.theme.Color.gray.base};
+  border-bottom: 1px solid ${p => p.theme.Color.gray.light};
   margin: -${props => props.theme.Density.spacing.md};
   margin-bottom: ${props => props.theme.Density.spacing.md};
   padding: 0 ${props => props.theme.Density.spacing.md};
