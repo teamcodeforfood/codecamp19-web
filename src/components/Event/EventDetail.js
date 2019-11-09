@@ -10,7 +10,8 @@ import {
   Intent,
   Input,
   ListItem,
-  List
+  List,
+  Spinner
 } from "amino-ui";
 import Geopattern from "geopattern";
 import { Heading } from "evergreen-ui";
@@ -23,6 +24,7 @@ import { Card } from "../Layout/Card";
 import { TeamCode } from "../Team/TeamCode";
 import { Divider } from "../Layout/Divider";
 import { fetcher } from "../../utils/fetcher";
+import { LoadingLayout } from "../Layout/LoadingLayout";
 
 const Header = styled.div`
   height: 150px;
@@ -65,7 +67,12 @@ export const EventDetail = () => {
   const [createTeam, setCreateTeam] = useState(false);
   const [joinTeam, setJoinTeam] = useState(false);
 
-  if (!data) return <div>loading...</div>;
+  if (!data)
+    return (
+      <LoadingLayout>
+        <Spinner />
+      </LoadingLayout>
+    );
 
   return (
     <>
@@ -126,7 +133,10 @@ export const EventDetail = () => {
             />
             <ListItem
               icon="/images/create-team.svg"
-              onClick={() => {}}
+              onClick={() => {
+                setOpen(false);
+                setCreateTeam(true);
+              }}
               label="Create a new team"
               subtitle="Don't have a team or looking to start a new one? Select this option."
             />
@@ -140,8 +150,14 @@ export const EventDetail = () => {
         label={`Join a team for ${data.name}`}
         onClose={() => setJoinTeam(false)}
       >
-        Have a team code? Enter it here:
         <TeamCode />
+      </Dialog>
+      <Dialog
+        open={createTeam}
+        label={`Create a team for ${data.name}`}
+        onClose={() => setCreateTeam(false)}
+      >
+        create a new team
       </Dialog>
     </>
   );

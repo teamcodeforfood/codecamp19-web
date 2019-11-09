@@ -1,16 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Density, Input } from "amino-ui";
+import { useInput } from "react-hanger";
 
 const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: -${Density.spacing.sm};
-  margin-right: -${Density.spacing.sm};
 
   input {
     flex: 1;
-    margin: 0 ${Density.spacing.sm};
     font-size: 40px;
     display: flex;
     height: 80px;
@@ -20,15 +18,17 @@ const Wrapper = styled.div`
 `;
 
 export const TeamCode = () => {
+  const teamCode = useInput("");
+
   return (
     <Wrapper>
-      <Input />
-      <Input />
-      <Input />
-      <Input />
-      <Input />
-      <Input />
-      <Input />
+      <Input
+        autoComplete={false}
+        spellCheck={false}
+        label="Have a team code?"
+        placeholder="00000000"
+        {...teamCode}
+      />
     </Wrapper>
   );
 };
