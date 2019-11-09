@@ -20,9 +20,13 @@ import { fetcher } from "../../utils/fetcher";
 import { LoadingLayout } from "../Layout/LoadingLayout";
 import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
 import { toaster } from "evergreen-ui";
+import { useDispatch } from "react-redux";
+import { push } from "connected-react-router";
 
 export const EventAdmin = () => {
   const { id } = useParams();
+  const dispatch = useDispatch();
+  const goto = url => dispatch(push(url));
 
   const { data: event } = useSWR(
     `${process.env.REACT_APP_API_URL}/events/${id}`,
@@ -34,6 +38,10 @@ export const EventAdmin = () => {
   );
   const { data: teams } = useSWR(
     () => `${process.env.REACT_APP_API_URL}/events/${id}/teams`,
+    fetcher
+  );
+  const { data: divisions } = useSWR(
+    () => `${process.env.REACT_APP_API_URL}/events/${id}/divisions`,
     fetcher
   );
 
@@ -99,6 +107,19 @@ export const EventAdmin = () => {
       />
     ));
 
+  const divisionsList =
+    divisions &&
+    divisions.divisions &&
+    divisions.divisions.map((division, index) => (
+      <ListItem
+        icon="/images/division-icon.svg"
+        key={index}
+        label={division.name}
+        subtitle={division.description}
+        onClick={() => goto(`/events/${id}/divisions/${division.id}`)}
+      />
+    ));
+
   if (!event || !owner)
     return (
       <LoadingLayout>
@@ -161,9 +182,20 @@ export const EventAdmin = () => {
             </InputGroup>
           </Card>
 
-          <Card cardTitle="Teams">{teamsList}</Card>
+          <Card cardTitle="Teams">
+            <List>{teamsList}</List>
+          </Card>
 
-          <Card cardTitle="Scoring"></Card>
+          <Card
+            cardTitle="Divisions"
+            actions={
+              <Button intent={Intent.Primary} onClick={() => {}}>
+                Create new division
+              </Button>
+            }
+          >
+            <List>{divisionsList}</List>
+          </Card>
 
           <Card cardTitle="Judges"></Card>
         </CardStack>

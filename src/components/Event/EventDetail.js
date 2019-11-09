@@ -163,7 +163,9 @@ export const EventDetail = () => {
 
               <Actions>
                 {user.role === "admin" ? (
-                  <Button onClick={() => goto("admin")}>Admin</Button>
+                  <Button onClick={() => goto(`/events/${id}/admin`)}>
+                    Admin
+                  </Button>
                 ) : null}
                 {!isRegistered() ? (
                   <Button intent={Intent.Primary} onClick={() => setOpen(true)}>
