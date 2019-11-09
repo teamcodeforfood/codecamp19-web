@@ -38,7 +38,7 @@ export const DivisionDetail = () => {
   const [savingDetails, setSavingDetails] = useState(false);
 
   useEffect(() => {
-    if (division) {
+    if (division && division.division) {
       setName(division.division.name || "");
       setDescription(division.division.description || "");
     }
@@ -48,24 +48,45 @@ export const DivisionDetail = () => {
     setSavingDetails(true);
 
     try {
-      const response = await fetcher(
-        `${process.env.REACT_APP_API_URL}/events/${id}/divisions/${division_id}`,
-        {
-          method: "PATCH",
-          body: JSON.stringify({
-            name,
-            description
-          })
-        }
-      );
+      if (division_id !== "new") {
+        const response = await fetcher(
+          `${process.env.REACT_APP_API_URL}/events/${id}/divisions/${division_id}`,
+          {
+            method: "PATCH",
+            body: JSON.stringify({
+              name,
+              description
+            })
+          }
+        );
 
-      if (response) {
-        toaster.success("Division details updated successfully");
+        if (response) {
+          toaster.success("Division details updated successfully");
+        } else {
+          toaster.danger("Couldn't update division details");
+        }
       } else {
-        toaster.danger("Couldn't update division details");
+        const response = await fetcher(
+          `${process.env.REACT_APP_API_URL}/events/${id}/divisions`,
+          {
+            method: "POST",
+            body: JSON.stringify({
+              name,
+              description,
+              event_id: id
+            })
+          }
+        );
+
+        if (response) {
+          toaster.success("Division created successfully");
+          goto(`/events/${id}/divisions/${response.division.id}`);
+        } else {
+          toaster.danger("Couldn't create division");
+        }
       }
     } catch (e) {
-      toaster.danger("Couldn't update division details");
+      toaster.danger("Couldn't create division");
     }
 
     setSavingDetails(false);
@@ -109,10 +130,13 @@ export const DivisionDetail = () => {
               />
             </InputGroup>
           </Card>
-          <Card
-            cardTitle="Categories"
-            actions={<Button>Create category</Button>}
-          ></Card>
+
+          {division_id !== "new" ? (
+            <Card
+              cardTitle="Categories"
+              actions={<Button>Create category</Button>}
+            ></Card>
+          ) : null}
         </CardStack>
       </ResponsiveContainer>
     </>

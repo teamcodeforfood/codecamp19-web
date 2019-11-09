@@ -189,7 +189,10 @@ export const EventAdmin = () => {
           <Card
             cardTitle="Divisions"
             actions={
-              <Button intent={Intent.Primary} onClick={() => {}}>
+              <Button
+                intent={Intent.Primary}
+                onClick={() => goto(`/events/${id}/divisions/new`)}
+              >
                 Create new division
               </Button>
             }
