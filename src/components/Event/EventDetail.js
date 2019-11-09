@@ -16,7 +16,7 @@ import Geopattern from "geopattern";
 import { Heading } from "evergreen-ui";
 import useSWR from "swr";
 import { format } from "date-fns";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { AppHeader } from "../Layout/AppHeader";
 import { Dialog } from "../Layout/Dialog";
@@ -29,6 +29,7 @@ import { LoadingLayout } from "../Layout/LoadingLayout";
 import { CreateTeam } from "../Team/CreateTeam";
 import { ResponsiveContainer } from "../Layout/ResponsiveContainer";
 import jwtDecode from "jwt-decode";
+import { push } from "connected-react-router";
 
 const Header = styled.div`
   height: 200px;
@@ -87,8 +88,14 @@ const Left = styled.div`
 `;
 
 export const EventDetail = () => {
+  const dispatch = useDispatch();
+  const goto = url => dispatch(push(url));
   const user = useSelector(state => state.user);
+  const token = jwtDecode(localStorage.getItem("token"));
   const { id } = useParams();
+
+  const [teamId, setTeamId] = useState(0);
+
   const { data: event } = useSWR(
     `${process.env.REACT_APP_API_URL}/events/${id}`,
     fetcher
@@ -101,13 +108,27 @@ export const EventDetail = () => {
     `${process.env.REACT_APP_API_URL}/events/${id}/participants`,
     fetcher
   );
+  const { data: team } = useSWR(
+    () => `${process.env.REACT_APP_API_URL}/events/${id}/teams/${teamId}`,
+    fetcher
+  );
+
+  useEffect(() => {
+    if (participants) {
+      const participant = participants.users
+        .filter(participant => participant.user_id === token.user.id)
+        .pop();
+
+      if (participant) {
+        setTeamId(participant.team_id);
+      }
+    }
+  }, [participants]);
 
   const isRegistered = () => {
     if (!participants) {
       return false;
     }
-
-    const token = jwtDecode(localStorage.getItem("token"));
 
     return participants.users.filter(
       participant => participant.user_id === token.user.id
@@ -142,7 +163,7 @@ export const EventDetail = () => {
 
               <Actions>
                 {user.role === "admin" ? (
-                  <Button onClick={() => {}}>Admin</Button>
+                  <Button onClick={() => goto("admin")}>Admin</Button>
                 ) : null}
                 {!isRegistered() ? (
                   <Button intent={Intent.Primary} onClick={() => setOpen(true)}>
@@ -187,12 +208,12 @@ export const EventDetail = () => {
             </Info>
           </Card>
 
-          {isRegistered() ? (
+          {team && isRegistered() ? (
             <Card cardTitle="Registration info">
               <List>
                 <ListItem
                   icon="/images/join-team.svg"
-                  label="you're on team code for food!"
+                  label={`Member of ${team.name}`}
                   onClick={() => {}}
                 />
               </List>
